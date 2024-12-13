@@ -21,5 +21,9 @@ public class CustomerDetails {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> shippingAddress;
 
+    @OneToOne(mappedBy = "customerDetails", cascade = CascadeType.ALL)
+    private Cart cart;
+
+
 
 }

@@ -3,9 +3,12 @@ package com.chamodidh.market_pulse.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @Entity
-@Table(name = "CustomerDetails")
+@Table(name = "SupplierDetails")
 public class SupplierDetails {
 
     @Id
@@ -19,4 +22,7 @@ public class SupplierDetails {
 
     @Column(name = "COMPANY_ADDRESS")
     private String companyAddress;
+
+    @OneToMany(mappedBy = "supplierDetails", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Item> items = new ArrayList<>();
 }
