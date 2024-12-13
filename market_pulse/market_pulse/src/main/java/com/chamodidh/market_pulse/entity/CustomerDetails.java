@@ -22,5 +22,4 @@ public class CustomerDetails {
     private List<String> shippingAddress;
 
 
-
 }
