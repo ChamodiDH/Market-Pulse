@@ -3,6 +3,7 @@ package com.chamodidh.market_pulse.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -23,6 +24,10 @@ public class CustomerDetails {
 
     @OneToOne(mappedBy = "customerDetails", cascade = CascadeType.ALL)
     private Cart cart;
+
+
+    @OneToMany(mappedBy = "customerDetails", cascade = CascadeType.ALL)
+    private List<Review> reviews = new ArrayList<>();
 
 
 

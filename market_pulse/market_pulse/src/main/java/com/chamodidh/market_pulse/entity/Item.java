@@ -41,6 +41,9 @@ public class Item {
     @ManyToMany(mappedBy = "item")
     private List<Cart> carts = new ArrayList<>();
 
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+    private List<Review> reviews = new ArrayList<>();
+
     //one to many review
 
 
