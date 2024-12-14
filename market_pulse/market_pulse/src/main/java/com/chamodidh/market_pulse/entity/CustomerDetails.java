@@ -30,6 +30,10 @@ public class CustomerDetails {
     private List<Review> reviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "customerDetails", cascade = CascadeType.ALL)
+    private List<Payment> payments = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "customerDetails", cascade = CascadeType.ALL)
     private List<Order> orders = new ArrayList<>();
 
 
