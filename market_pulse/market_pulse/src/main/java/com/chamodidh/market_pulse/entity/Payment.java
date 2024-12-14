@@ -29,6 +29,6 @@ public class Payment {
     @JoinColumn(name = "CUSTOMER_ID", nullable = false)
     private CustomerDetails customerDetails;
 
-    
+
 
 }
