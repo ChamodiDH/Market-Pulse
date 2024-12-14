@@ -29,5 +29,5 @@ public class Review {
     @JoinColumn(name = "ITEM_ID", nullable = false)
     private Item item;
 
-    
+
 }

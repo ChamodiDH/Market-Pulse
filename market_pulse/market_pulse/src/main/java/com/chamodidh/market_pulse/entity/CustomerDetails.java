@@ -29,6 +29,9 @@ public class CustomerDetails {
     @OneToMany(mappedBy = "customerDetails", cascade = CascadeType.ALL)
     private List<Review> reviews = new ArrayList<>();
 
+    @OneToMany(mappedBy = "customerDetails", cascade = CascadeType.ALL)
+    private List<Order> orders = new ArrayList<>();
+
 
 
 }
