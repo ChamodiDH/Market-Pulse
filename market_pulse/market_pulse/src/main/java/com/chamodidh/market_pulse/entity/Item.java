@@ -33,14 +33,15 @@ public class Item {
     @ManyToOne
     @JoinColumn(name = "SUPPLIER_ID", nullable = false)
     private SupplierDetails supplierDetails;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "CATEGORY_ID", nullable = false)
-//    private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "CATEGORY_ID", nullable = false)
+    private Category category;
 
     @ManyToMany(mappedBy = "item")
     private List<Cart> carts = new ArrayList<>();
 
     //one to many review
+
 
 }
