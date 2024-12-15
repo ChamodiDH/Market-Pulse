@@ -1,5 +1,6 @@
 package com.chamodidh.market_pulse.entity;
 
+import com.chamodidh.market_pulse.utility.enums.ShipmentStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,7 +16,7 @@ public class Shipment {
     private Long id;
 
     @Column(name = "STATUS")
-    private String status;
+    private ShipmentStatus status;
 
     @Column(name = "ESTIMATED_DELIVERY_DATE")
     @Temporal(TemporalType.DATE)
@@ -34,7 +35,7 @@ public class Shipment {
 
     @PrePersist
     private void generateTrackNo() {
-       
+
         if (order != null && customerDetails != null) {
             String orderIdPart = String.format("%05d", order.getId()); // Order ID padded to 5 digits
             String customerIdPart = String.format("%03d", customerDetails.getId()); // Customer ID padded to 3 digits
