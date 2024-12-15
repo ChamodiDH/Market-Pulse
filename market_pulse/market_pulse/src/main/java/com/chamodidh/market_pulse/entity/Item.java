@@ -6,8 +6,8 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
 @Entity
+@Data
 @Table(name="Item")
 public class Item {
     @Id
@@ -38,7 +38,7 @@ public class Item {
     @JoinColumn(name = "CATEGORY_ID", nullable = false)
     private Category category;
 
-    @ManyToMany(mappedBy = "item")
+    @ManyToMany(mappedBy = "items")
     private List<Cart> carts = new ArrayList<>();
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)

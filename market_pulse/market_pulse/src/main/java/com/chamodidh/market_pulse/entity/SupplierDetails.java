@@ -6,8 +6,9 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+
 @Entity
+@Data
 @Table(name = "SupplierDetails")
 public class SupplierDetails {
 

@@ -6,8 +6,9 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+
 @Entity
+@Data
 @Table(name="Cart")
 public class Cart {
     @Id
@@ -23,7 +24,7 @@ public class Cart {
 
     @OneToOne
     @JoinColumn(name = "CUSTOMER_ID", nullable = false)
-    private CustomerDetails customer;
+    private CustomerDetails customerDetails;
 
     @ManyToMany
     @JoinTable(

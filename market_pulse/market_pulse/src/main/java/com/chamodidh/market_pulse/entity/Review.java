@@ -3,8 +3,8 @@ package com.chamodidh.market_pulse.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-@Data
 @Entity
+@Data
 @Table(name="Review")
 public class Review {
     //one to many user check
@@ -23,7 +23,7 @@ public class Review {
 
     @ManyToOne
     @JoinColumn(name = "CUSTOMER_ID", nullable = false)
-    private CustomerDetails customer;
+    private CustomerDetails customerDetails;
 
     @ManyToOne
     @JoinColumn(name = "ITEM_ID", nullable = false)

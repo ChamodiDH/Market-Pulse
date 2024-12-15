@@ -6,8 +6,8 @@ import lombok.Data;
 import java.util.Date;
 import java.util.List;
 
-@Data
 @Entity
+@Data
 @Table(name = "USER")
 public class User {
     @Id

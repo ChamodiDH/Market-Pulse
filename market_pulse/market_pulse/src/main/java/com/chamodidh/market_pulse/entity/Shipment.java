@@ -3,11 +3,13 @@ package com.chamodidh.market_pulse.entity;
 import com.chamodidh.market_pulse.utility.enums.ShipmentStatus;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 
 import java.util.Date;
 
-@Data
 @Entity
+@Data
+@Getter
 @Table(name="Shipment")
 public class Shipment {
     @Id
@@ -36,12 +38,11 @@ public class Shipment {
     @PrePersist
     private void generateTrackNo() {
 
-        if (order != null && customerDetails != null) {
-            String orderIdPart = String.format("%05d", order.getId()); // Order ID padded to 5 digits
-            String customerIdPart = String.format("%03d", customerDetails.getId()); // Customer ID padded to 3 digits
-            this.trackNo = orderIdPart + "-" + customerIdPart;
-        } else {
-            throw new IllegalStateException("Order and CustomerDetails must be set before saving Shipment");
-        }
+        Long orderId = order.getId();
+        Long customerId = customerDetails.getId();
+
+        String orderIdPart = String.format("%05d", orderId); // Order ID padded to 5 digits
+        String customerIdPart = String.format("%03d", customerId); // Customer ID padded to 3 digits
+        this.trackNo = orderIdPart + "-" + customerIdPart;
     }
 }

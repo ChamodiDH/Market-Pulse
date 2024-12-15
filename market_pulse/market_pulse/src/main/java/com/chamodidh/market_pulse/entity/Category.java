@@ -6,8 +6,9 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+
 @Entity
+@Data
 @Table(name="Category")
 public class Category {
 
@@ -19,11 +20,9 @@ public class Category {
     @Column(name="NAME")
     private String type;
 
-    @OneToMany(mappedBy = "Category", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Item> items = new ArrayList<>();
 
 
-
-    //one to many relationship with item
 }
 

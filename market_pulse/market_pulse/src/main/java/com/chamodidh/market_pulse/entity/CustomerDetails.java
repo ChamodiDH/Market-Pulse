@@ -6,8 +6,8 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
 @Entity
+@Data
 @Table(name = "CustomerDetails")
 public class CustomerDetails {
 
@@ -35,7 +35,6 @@ public class CustomerDetails {
 
     @OneToMany(mappedBy = "customerDetails", cascade = CascadeType.ALL)
     private List<Order> orders = new ArrayList<>();
-
 
 
 }

@@ -2,13 +2,15 @@ package com.chamodidh.market_pulse.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
 import java.util.Date;
 
-@Data
+
 @Entity
+@Data
+
 @Table(name="Order")
 public class Order {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="ID")
@@ -31,13 +33,5 @@ public class Order {
 
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
     private Shipment shipment;
-
-
-
-    //one to one payment
-
-
-    //one to one shipment
-
 
 }

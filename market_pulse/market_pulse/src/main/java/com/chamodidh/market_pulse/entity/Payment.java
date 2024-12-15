@@ -5,8 +5,8 @@ import lombok.Data;
 
 import java.util.Date;
 
-@Data
 @Entity
+@Data
 @Table(name="Payment")
 public class Payment {
     @Id
