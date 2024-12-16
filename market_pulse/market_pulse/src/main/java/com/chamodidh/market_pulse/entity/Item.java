@@ -11,9 +11,9 @@ import java.util.List;
 @Table(name="Item")
 public class Item {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy =  GenerationType.AUTO)
     @Column(name = "ID")
-    private String id;
+    private Long id;
 
     @Column(name = "UNIT_PRICE")
     private float unitPrice;

@@ -12,7 +12,8 @@ import java.util.List;
 public class CustomerDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy =  GenerationType.AUTO)
+    @Column(name="CUSTOMER_ID")
     private Long id;
 
     @OneToOne

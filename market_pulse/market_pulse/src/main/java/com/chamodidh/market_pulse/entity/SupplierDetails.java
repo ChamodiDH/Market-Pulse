@@ -13,9 +13,9 @@ import java.util.List;
 public class SupplierDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="CUSTOMER_ID")
-    private String id;
+    @GeneratedValue(strategy =  GenerationType.AUTO)
+    @Column(name="SUPPLIER_ID")
+    private Long id;
 
     @OneToOne
     @JoinColumn(name = "USER_ID", nullable = false)

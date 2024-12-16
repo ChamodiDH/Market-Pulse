@@ -11,7 +11,7 @@ public class Review {
     //one to many item check
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy =  GenerationType.AUTO)
     @Column(name="ID")
     private Long id;
 

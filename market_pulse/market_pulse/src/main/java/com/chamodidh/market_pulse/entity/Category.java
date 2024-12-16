@@ -3,6 +3,7 @@ package com.chamodidh.market_pulse.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
 public class Category {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="ID")
     private Long id;
 

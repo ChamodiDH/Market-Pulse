@@ -8,12 +8,12 @@ import java.util.List;
 
 @Entity
 @Data
-@Table(name = "USER")
+@Table(name = "USERS")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy =  GenerationType.AUTO)
     @Column(name = "ID")
-    private long id;
+    private Long id;
 
     @Column(name="FIRST_NAME")
     private String firstName;
