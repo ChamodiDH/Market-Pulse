@@ -1,6 +1,7 @@
 package com.chamodidh.market_pulse.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 
 
@@ -11,6 +12,7 @@ import java.util.List;
 @Entity
 @Data
 @Table(name="Category")
+@Builder
 public class Category {
 
     @Id
