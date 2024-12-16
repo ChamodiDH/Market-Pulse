@@ -21,5 +21,7 @@ public class UserModel {
     private String password;
     private List<String> roles;
     private List<String> contact;
+    private List<String> shippingAddress;
+    private String companyAddress;
     private Date registeredDate;
 }
