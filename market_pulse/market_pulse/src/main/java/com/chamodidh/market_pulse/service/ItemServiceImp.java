@@ -8,9 +8,10 @@ import com.chamodidh.market_pulse.repository.CategoryRepository;
 import com.chamodidh.market_pulse.repository.ItemServiceRepository;
 import com.chamodidh.market_pulse.repository.SupplierDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class ItemServiceImp implements ItemService{
     @Autowired
     ItemServiceRepository itemServiceRepository;
