@@ -43,6 +43,12 @@ public class ItemController {
         return itemService.getItems();
     }
 
+    @GetMapping("/items/search")
+    public List<Item> searchItems(@RequestParam String keyword){
+        return itemService.searchItems(keyword);
+
+    }
+
 
 
 
