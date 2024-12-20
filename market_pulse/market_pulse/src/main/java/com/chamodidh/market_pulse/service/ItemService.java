@@ -17,4 +17,6 @@ public interface ItemService {
     Item getItemById(long id);
 
     List<Item> getItems();
+
+    List<Item> searchItems(String keyword);
 }

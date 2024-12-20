@@ -75,4 +75,9 @@ public class ItemServiceImp implements ItemService{
     public List<Item> getItems() {
         return itemServiceRepository.findAll();
     }
+
+    @Override
+    public List<Item> searchItems(String keyword) {
+        return itemServiceRepository.searchItemsByKeyword(keyword);
+    }
 }
