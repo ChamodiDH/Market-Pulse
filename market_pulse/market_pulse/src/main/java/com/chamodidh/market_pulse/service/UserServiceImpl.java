@@ -1,5 +1,6 @@
 package com.chamodidh.market_pulse.service;
 
+import com.chamodidh.market_pulse.entity.Cart;
 import com.chamodidh.market_pulse.entity.CustomerDetails;
 import com.chamodidh.market_pulse.entity.SupplierDetails;
 import com.chamodidh.market_pulse.entity.User;
@@ -43,8 +44,10 @@ public class UserServiceImpl implements UserService{
      }
      if(user.getRoles().contains("CUSTOMER")){
             CustomerDetails customer = new CustomerDetails();
+            Cart cart = new Cart();
             customer.setUser(user);
             customer.setShippingAddress(userModel.getShippingAddress());
+            customer.setCart(cart);
             customerDetailsRepository.save(customer);
         }
 
