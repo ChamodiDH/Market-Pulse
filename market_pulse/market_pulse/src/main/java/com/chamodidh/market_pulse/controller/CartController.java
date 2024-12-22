@@ -1,12 +1,11 @@
 package com.chamodidh.market_pulse.controller;
 
+import com.chamodidh.market_pulse.entity.Cart;
 import com.chamodidh.market_pulse.entity.Item;
+import com.chamodidh.market_pulse.model.CartModel;
 import com.chamodidh.market_pulse.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,7 +21,19 @@ public class CartController {
        return cartService.addToCart(itemId, userId);
 
     }
-    
+
+    @DeleteMapping("/delete")
+    public String deleteItem(@RequestParam long itemId, @RequestParam long userId){
+        return cartService.deleteItem(itemId, userId);
+    }
+
+    @GetMapping("/getItems")
+    public CartModel getCart(@RequestParam long userId){
+        return cartService.getCart(userId);
+    }
+
+
+
 
 
 }
