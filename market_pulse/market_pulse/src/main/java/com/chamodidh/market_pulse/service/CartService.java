@@ -12,4 +12,6 @@ public interface CartService {
     String deleteItem(long itemId, long userId);
 
     CartModel getCart(long userId);
+
+    public void emptyCart(long userId);
 }

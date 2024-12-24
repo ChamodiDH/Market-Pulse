@@ -9,6 +9,7 @@ import com.chamodidh.market_pulse.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -47,6 +48,15 @@ public class CartServiceImpl implements CartService{
     public CartModel getCart(long userId) {
         Cart cart = userRepository.findById(userId).get().getCustomerDetails().getCart();
         return CartModel.builder().id(cart.getId()).totalCost(cart.getTotalCost()).items(cart.getItems()).numberOfItems(cart.getNumberOfItems()).build();
+    }
+
+    @Override
+    public void emptyCart(long userId) {
+        Cart cart = userRepository.findById(userId).get().getCustomerDetails().getCart();
+        cart.setItems(new ArrayList<>());
+        cart.setTotalCost(0.0f);
+        cartRepository.save(cart);
+        System.out.println("Cart emptied");
     }
 
 
