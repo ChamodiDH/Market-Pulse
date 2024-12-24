@@ -1,5 +1,6 @@
 package com.chamodidh.market_pulse.controller;
 
+import com.chamodidh.market_pulse.service.PaymentService;
 import com.chamodidh.market_pulse.service.StripeService;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Charge;
@@ -15,9 +16,12 @@ public class PaymentController {
 
     @Autowired
     private StripeService stripeService;
+    @Autowired
+    private PaymentService paymentService;
 
     @PostMapping("/charge")
-    public Charge charge(@RequestParam String token, @RequestParam double amount) throws StripeException {
-        return stripeService.createCharge(token, amount); // Create a charge
+    public Charge charge(@RequestParam String token, @RequestParam double amount, @RequestParam long userId) throws StripeException {
+        return paymentService.managePayment(token,amount, userId);
+         // Create a charge
     }
 }
