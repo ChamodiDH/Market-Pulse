@@ -8,6 +8,8 @@ import com.chamodidh.market_pulse.repository.CategoryRepository;
 import com.chamodidh.market_pulse.repository.ItemServiceRepository;
 import com.chamodidh.market_pulse.repository.SupplierDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -73,8 +75,8 @@ public class ItemServiceImp implements ItemService{
     }
 
     @Override
-    public List<Item> getItems() {
-        return itemServiceRepository.findAll();
+    public List<Item> getItems(Pageable pageable) {
+        return itemServiceRepository.findAll(pageable).getContent();
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.chamodidh.market_pulse.entity.Item;
 import com.chamodidh.market_pulse.model.ItemModel;
 import com.chamodidh.market_pulse.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,8 +40,8 @@ public class ItemController {
     }
 
     @GetMapping("/items")
-    public List<Item> getItems(){
-        return itemService.getItems();
+    public List<Item> getItems(@RequestParam int page, @RequestParam int size){
+        return itemService.getItems(PageRequest.of(page,size));
     }
 
     @GetMapping("/items/search")
