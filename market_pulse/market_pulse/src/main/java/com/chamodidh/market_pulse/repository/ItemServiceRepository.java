@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface ItemServiceRepository extends JpaRepository<Item,Long> {
-    @Query(value = "SELECT * FROM items " +
+    @Query(value = "SELECT * FROM item " +
             "WHERE LOWER(item_name) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
             "OR LOWER(brand_name) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
             "OR LOWER(description) LIKE LOWER(CONCAT('%', :keyword, '%'))",
