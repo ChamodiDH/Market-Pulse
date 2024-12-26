@@ -41,7 +41,9 @@ public class ShipmentServiceImpl implements ShipmentService{
             } catch (IllegalArgumentException e) {
                 // If the string doesn't match any enum, this block executes
                 System.out.println("Invalid ShipmentStatus: " + status);
+                return null;
             }
         }
+        return null;
     }
 }
