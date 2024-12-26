@@ -16,7 +16,9 @@ import java.util.List;
 public class CartServiceImpl implements CartService{
     @Autowired
     CartRepository cartRepository;
+    @Autowired
     ItemServiceRepository itemServiceRepository;
+    @Autowired
     UserRepository userRepository;
     @Override
     public List<Item> addToCart(long itemId, long userId) {
@@ -27,7 +29,7 @@ public class CartServiceImpl implements CartService{
         //save the cart to the item
         cart.getItems().add(item);
         cart.setTotalCost(cart.getTotalCost() + item.getUnitPrice());
-
+        cart.setNumberOfItems(cart.getNumberOfItems() + 1);
         cartRepository.save(cart);
         return cartRepository.findById(cart.getId()).get().getItems();
 
@@ -39,6 +41,9 @@ public class CartServiceImpl implements CartService{
         Item item = itemServiceRepository.findById(itemId).get();
         cart.getItems().remove(item);
         cart.setTotalCost(cart.getTotalCost() - item.getUnitPrice());
+        if(!cart.getItems().isEmpty()){
+            cart.setNumberOfItems(cart.getNumberOfItems() - 1);
+        }
         cartRepository.save(cart);
         return "Removed successfully";
 
@@ -55,6 +60,7 @@ public class CartServiceImpl implements CartService{
         Cart cart = userRepository.findById(userId).get().getCustomerDetails().getCart();
         cart.setItems(new ArrayList<>());
         cart.setTotalCost(0.0f);
+        cart.setNumberOfItems(0);
         cartRepository.save(cart);
         System.out.println("Cart emptied");
     }
