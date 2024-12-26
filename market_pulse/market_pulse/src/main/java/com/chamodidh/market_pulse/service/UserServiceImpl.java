@@ -47,6 +47,7 @@ public class UserServiceImpl implements UserService{
             Cart cart = new Cart();
             customer.setUser(user);
             customer.setShippingAddress(userModel.getShippingAddress());
+            cart.setCustomerDetails(customer);
             customer.setCart(cart);
             customerDetailsRepository.save(customer);
         }
