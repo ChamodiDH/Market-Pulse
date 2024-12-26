@@ -61,8 +61,8 @@ public class ItemServiceImp implements ItemService{
         item.setDescription(itemModel.getDescription());
         item.setQuantity(itemModel.getQuantity());
         item.setBrandName(itemModel.getBrandName());
-        item.setDescription(itemModel.getDescription());
         item.setSupplierDetails(supplierDetails);
+        item.setUnitPrice(itemModel.getUnitPrice());
 
         return itemServiceRepository.save(item);
 
