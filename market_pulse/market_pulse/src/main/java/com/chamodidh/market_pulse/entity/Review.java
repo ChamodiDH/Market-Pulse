@@ -1,11 +1,15 @@
 package com.chamodidh.market_pulse.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @Table(name="Review")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Review {
     //one to many user check
     //one to many item check

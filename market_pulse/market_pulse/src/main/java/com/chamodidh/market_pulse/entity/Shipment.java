@@ -2,8 +2,10 @@ package com.chamodidh.market_pulse.entity;
 
 import com.chamodidh.market_pulse.utility.enums.ShipmentStatus;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
@@ -11,6 +13,8 @@ import java.util.Date;
 @Data
 @Getter
 @Table(name="Shipment")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Shipment {
     @Id
     @GeneratedValue(strategy =  GenerationType.AUTO)
