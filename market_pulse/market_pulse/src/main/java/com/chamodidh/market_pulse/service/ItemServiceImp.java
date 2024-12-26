@@ -27,13 +27,13 @@ public class ItemServiceImp implements ItemService{
         SupplierDetails supplierDetails = supplierDetailsRepository.findById(itemModel.getSupplierId()).get();
         Category category = categoryRepository.findById(itemModel.getCategoryId()).get();
         Item item = new Item();
-        item.setItemName(item.getItemName());
+        item.setItemName(itemModel.getItemName());
         item.setCategory(category);
-        item.setDescription(item.getDescription());
-        item.setQuantity(item.getQuantity());
-        item.setBrandName(item.getBrandName());
+        item.setQuantity(itemModel.getQuantity());
+        item.setBrandName(itemModel.getBrandName());
         item.setDescription(itemModel.getDescription());
         item.setSupplierDetails(supplierDetails);
+        item.setUnitPrice(itemModel.getUnitPrice());
 
       return itemServiceRepository.save(item);
 
