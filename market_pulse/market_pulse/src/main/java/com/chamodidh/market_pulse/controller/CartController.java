@@ -5,6 +5,8 @@ import com.chamodidh.market_pulse.entity.Item;
 import com.chamodidh.market_pulse.model.CartModel;
 import com.chamodidh.market_pulse.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,14 +19,14 @@ public class CartController {
     CartService cartService;
 
     @PostMapping("/add")
-    public List<Item> addItemToTheCart(@RequestParam long itemId, @RequestParam long userId){
-       return cartService.addToCart(itemId, userId);
+    public ResponseEntity<List<Item>> addItemToTheCart(@RequestParam long itemId, @RequestParam long userId){
+       return new ResponseEntity<>(cartService.addToCart(itemId, userId), HttpStatus.OK);
 
     }
 
     @DeleteMapping("/delete")
-    public String deleteItem(@RequestParam long itemId, @RequestParam long userId){
-        return cartService.deleteItem(itemId, userId);
+    public ResponseEntity< String> deleteItem(@RequestParam long itemId, @RequestParam long userId){
+        return new ResponseEntity<>( cartService.deleteItem(itemId, userId), HttpStatus.OK);
     }
 
     @GetMapping("/getItems")
