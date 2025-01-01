@@ -1,5 +1,6 @@
 package com.chamodidh.market_pulse.service;
 
+import com.chamodidh.market_pulse.Exceptions.item.ItemNotFoundException;
 import com.chamodidh.market_pulse.entity.Category;
 import com.chamodidh.market_pulse.entity.Item;
 import com.chamodidh.market_pulse.entity.SupplierDetails;
@@ -42,6 +43,10 @@ public class ItemServiceImp implements ItemService{
 
     @Override
     public String removeItem(long id) {
+        if(itemServiceRepository.findById(id).isEmpty()){
+            throw  new ItemNotFoundException("Item not found");
+        }
+
         try{
             itemServiceRepository.deleteById(id);
             return "Deleted successfully";
