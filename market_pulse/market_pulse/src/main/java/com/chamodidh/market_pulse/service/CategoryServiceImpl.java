@@ -1,5 +1,6 @@
 package com.chamodidh.market_pulse.service;
 
+import com.chamodidh.market_pulse.Exceptions.CategoryAlreadyExists;
 import com.chamodidh.market_pulse.entity.Category;
 import com.chamodidh.market_pulse.model.CategoryModel;
 import com.chamodidh.market_pulse.repository.CategoryRepository;
@@ -13,11 +14,21 @@ public class CategoryServiceImpl implements CategoryService {
     CategoryRepository categoryRepository;
     public CategoryModel addCategory(CategoryModel categoryModel) {
 
-        Category category = Category.builder().type(categoryModel.getType()).build();
-        Category savedCategory = categoryRepository.save(category);
+        try {
 
-        return CategoryModel.builder().type(savedCategory.getType()).build();
+            if (categoryRepository.existsByType(categoryModel.getType())) {
+                throw new CategoryAlreadyExists("This category already exists");
+            }
 
+            Category category = Category.builder().type(categoryModel.getType()).build();
+            Category savedCategory = categoryRepository.save(category);
+
+            return CategoryModel.builder().type(savedCategory.getType()).build();
+        }catch(CategoryAlreadyExists e){
+            throw e;
+        }catch (Exception e){
+            throw new RuntimeException("Error in adding category", e);
+        }
 
     }
 }
