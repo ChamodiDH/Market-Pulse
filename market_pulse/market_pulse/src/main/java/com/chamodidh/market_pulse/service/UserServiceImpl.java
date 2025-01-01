@@ -1,6 +1,6 @@
 package com.chamodidh.market_pulse.service;
 
-import com.chamodidh.market_pulse.Exceptions.UserAlreadyExists;
+import com.chamodidh.market_pulse.Exceptions.user.UserAlreadyExists;
 import com.chamodidh.market_pulse.entity.Cart;
 import com.chamodidh.market_pulse.entity.CustomerDetails;
 import com.chamodidh.market_pulse.entity.SupplierDetails;

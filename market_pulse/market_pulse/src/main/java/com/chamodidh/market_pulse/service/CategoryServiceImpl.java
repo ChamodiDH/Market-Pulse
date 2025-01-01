@@ -1,10 +1,9 @@
 package com.chamodidh.market_pulse.service;
 
-import com.chamodidh.market_pulse.Exceptions.CategoryAlreadyExists;
+import com.chamodidh.market_pulse.Exceptions.category.CategoryAlreadyExists;
 import com.chamodidh.market_pulse.entity.Category;
 import com.chamodidh.market_pulse.model.CategoryModel;
 import com.chamodidh.market_pulse.repository.CategoryRepository;
-import com.chamodidh.market_pulse.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
