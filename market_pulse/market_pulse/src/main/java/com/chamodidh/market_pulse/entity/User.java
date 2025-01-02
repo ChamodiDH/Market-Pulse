@@ -1,0 +1,48 @@
+package com.chamodidh.market_pulse.entity;
+
+import jakarta.persistence.*;
+import lombok.Data;
+
+import java.util.Date;
+import java.util.List;
+
+@Entity
+@Data
+@Table(name = "USERS")
+public class User {
+    @Id
+    @GeneratedValue(strategy =  GenerationType.AUTO)
+    @Column(name = "ID")
+    private Long id;
+
+    @Column(name="FIRST_NAME")
+    private String firstName;
+
+    @Column(name="LAST_NAME")
+    private String lastName;
+
+    @Column(name="EMAIL_ID")
+    private String email;
+
+    @Column(name="PASSWORD")
+    private String password;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> contact;
+
+    @Column(name = "REGISTERED_DATE")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date registeredDate;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private CustomerDetails customerDetails;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private SupplierDetails supplierDetails;
+
+
+
+}

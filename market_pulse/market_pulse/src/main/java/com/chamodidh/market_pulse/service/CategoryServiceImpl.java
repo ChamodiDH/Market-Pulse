@@ -1,0 +1,33 @@
+package com.chamodidh.market_pulse.service;
+
+import com.chamodidh.market_pulse.Exceptions.category.CategoryAlreadyExists;
+import com.chamodidh.market_pulse.entity.Category;
+import com.chamodidh.market_pulse.model.CategoryModel;
+import com.chamodidh.market_pulse.repository.CategoryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class CategoryServiceImpl implements CategoryService {
+    @Autowired
+    CategoryRepository categoryRepository;
+    public CategoryModel addCategory(CategoryModel categoryModel) {
+
+        try {
+
+            if (categoryRepository.existsByType(categoryModel.getType())) {
+                throw new CategoryAlreadyExists("This category already exists");
+            }
+
+            Category category = Category.builder().type(categoryModel.getType()).build();
+            Category savedCategory = categoryRepository.save(category);
+
+            return CategoryModel.builder().type(savedCategory.getType()).build();
+        }catch(CategoryAlreadyExists e){
+            throw e;
+        }catch (Exception e){
+            throw new RuntimeException("Error in adding category", e);
+        }
+
+    }
+}
