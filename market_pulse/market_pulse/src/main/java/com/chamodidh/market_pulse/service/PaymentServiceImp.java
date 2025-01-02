@@ -1,5 +1,7 @@
 package com.chamodidh.market_pulse.service;
 
+import com.chamodidh.market_pulse.Exceptions.payment.InvalidPaymentAmount;
+import com.chamodidh.market_pulse.Exceptions.user.UserDoesNotExistsException;
 import com.chamodidh.market_pulse.entity.CustomerDetails;
 import com.chamodidh.market_pulse.entity.Order;
 import com.chamodidh.market_pulse.entity.Payment;
@@ -30,7 +32,14 @@ public class PaymentServiceImp implements PaymentService {
     ShipmentService shipmentService;
     @Override
     public Charge managePayment(String token, double amount, long userId) throws StripeException {
+
+        if(amount <= 0){
+            throw new InvalidPaymentAmount("Amount should be greater than 0");
+        }
         CustomerDetails customerDetails = userRepository.findById(userId).get().getCustomerDetails();
+        if(customerDetails == null){
+            throw new UserDoesNotExistsException("User does not exists");
+        }
         Charge charge = stripeService.createCharge(token, amount);
         float orderamount = (float) amount;
         Date currentDate = new Date();
@@ -39,13 +48,16 @@ public class PaymentServiceImp implements PaymentService {
         calendar.setTime(currentDate);
         calendar.add(Calendar.DAY_OF_MONTH, 14);
 
-        Order order = orderService.addOrder(customerDetails,orderamount);
-        Payment payment = addPayment(order,customerDetails, orderamount);
+        try {
+            Order order = orderService.addOrder(customerDetails, orderamount);
+            Payment payment = addPayment(order, customerDetails, orderamount);
 
-        shipmentService.addShipment(ShipmentStatus.PENDING,calendar.getTime(),order,customerDetails);
-        return charge;
+            shipmentService.addShipment(ShipmentStatus.PENDING, calendar.getTime(), order, customerDetails);
+            return charge;
 
-
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
