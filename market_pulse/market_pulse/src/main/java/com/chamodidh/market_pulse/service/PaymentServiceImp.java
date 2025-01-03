@@ -1,7 +1,7 @@
 package com.chamodidh.market_pulse.service;
 
-import com.chamodidh.market_pulse.Exceptions.payment.InvalidPaymentAmount;
-import com.chamodidh.market_pulse.Exceptions.user.UserDoesNotExistsException;
+import com.chamodidh.market_pulse.exceptions.payment.InvalidPaymentAmount;
+import com.chamodidh.market_pulse.exceptions.user.UserDoesNotExistsException;
 import com.chamodidh.market_pulse.entity.CustomerDetails;
 import com.chamodidh.market_pulse.entity.Order;
 import com.chamodidh.market_pulse.entity.Payment;

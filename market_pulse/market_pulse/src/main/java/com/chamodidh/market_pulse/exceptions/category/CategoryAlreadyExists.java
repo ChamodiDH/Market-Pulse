@@ -1,4 +1,4 @@
-package com.chamodidh.market_pulse.Exceptions.category;
+package com.chamodidh.market_pulse.exceptions.category;
 
 public class CategoryAlreadyExists extends RuntimeException {
     public CategoryAlreadyExists(String message) {
