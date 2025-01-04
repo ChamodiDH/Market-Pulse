@@ -6,4 +6,6 @@ import org.springframework.stereotype.Service;
 
 public interface UserService {
     public UserModel userRegister(UserModel userModel);
+
+    public String userLogin(UserModel userModel);
 }

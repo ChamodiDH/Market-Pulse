@@ -1,27 +1,37 @@
 package com.chamodidh.market_pulse.service;
 
+import com.chamodidh.market_pulse.config.CustomUserDetails;
 import com.chamodidh.market_pulse.exceptions.user.UserAlreadyExists;
 import com.chamodidh.market_pulse.entity.Cart;
 import com.chamodidh.market_pulse.entity.CustomerDetails;
 import com.chamodidh.market_pulse.entity.SupplierDetails;
 import com.chamodidh.market_pulse.entity.User;
+import com.chamodidh.market_pulse.exceptions.user.UserDoesNotExistsException;
 import com.chamodidh.market_pulse.model.UserModel;
 import com.chamodidh.market_pulse.repository.CustomerDetailsRepository;
 import com.chamodidh.market_pulse.repository.SupplierDetailsRepository;
 import com.chamodidh.market_pulse.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Objects;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService, UserDetailsService {
+
     @Autowired
     UserRepository userRepository;
     @Autowired
     SupplierDetailsRepository supplierDetailsRepository;
     @Autowired
     CustomerDetailsRepository customerDetailsRepository;
+    @Autowired
+    BCryptPasswordEncoder bycryptPasswordEncoder;
 
     @Override
     public UserModel userRegister(UserModel userModel) {
@@ -36,7 +46,7 @@ public class UserServiceImpl implements UserService{
             user.setFirstName(userModel.getFirstName());
             user.setLastName(userModel.getLastName());
             user.setEmail(userModel.getEmail());
-            user.setPassword(userModel.getPassword());
+            user.setPassword(bycryptPasswordEncoder.encode(userModel.getPassword()));
             user.setContact(userModel.getContact());
             user.setRoles(userModel.getRoles());
             user.setRegisteredDate(new Date());
@@ -67,6 +77,35 @@ public class UserServiceImpl implements UserService{
             throw new RuntimeException("An error occurred during user registration", e);
         }
 
+
+    }
+
+    @Override
+    public String userLogin(UserModel userModel) {
+        User user = userRepository.findByEmail(
+                userModel.getEmail()).orElseThrow(() -> new UserDoesNotExistsException("User not found"));
+        if(!Objects.isNull(user)){
+            if(user.getPassword().equals(userModel.getPassword())) {
+                return "Login Successful";
+            }else{
+                return "Login Failed due to incorrect password";
+            }
+        }else {
+         return "Incorrect Email";
+        }
+
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(
+                username).orElseThrow(() -> new UserDoesNotExistsException("User not found"));
+        if(Objects.isNull(user)){
+            System.out.println("User not available");
+            throw new UsernameNotFoundException("User not found");
+        }else {
+            return new CustomUserDetails(user);
+        }
 
     }
 }
