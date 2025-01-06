@@ -1,4 +1,4 @@
-package com.chamodidh.market_pulse.Exceptions;
+package com.chamodidh.market_pulse.exceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

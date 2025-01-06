@@ -1,11 +1,11 @@
-package com.chamodidh.market_pulse.Exceptions;
+package com.chamodidh.market_pulse.exceptions;
 
-import com.chamodidh.market_pulse.Exceptions.category.CategoryAlreadyExists;
-import com.chamodidh.market_pulse.Exceptions.category.CategoryNotFoundException;
-import com.chamodidh.market_pulse.Exceptions.item.*;
-import com.chamodidh.market_pulse.Exceptions.payment.InvalidPaymentAmount;
-import com.chamodidh.market_pulse.Exceptions.user.UserAlreadyExists;
-import com.chamodidh.market_pulse.Exceptions.user.UserDoesNotExistsException;
+import com.chamodidh.market_pulse.exceptions.category.CategoryAlreadyExists;
+import com.chamodidh.market_pulse.exceptions.category.CategoryNotFoundException;
+import com.chamodidh.market_pulse.exceptions.item.*;
+import com.chamodidh.market_pulse.exceptions.payment.InvalidPaymentAmount;
+import com.chamodidh.market_pulse.exceptions.user.UserAlreadyExists;
+import com.chamodidh.market_pulse.exceptions.user.UserDoesNotExistsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

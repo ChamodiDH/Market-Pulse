@@ -1,6 +1,6 @@
 package com.chamodidh.market_pulse.service;
 
-import com.chamodidh.market_pulse.Exceptions.category.CategoryAlreadyExists;
+import com.chamodidh.market_pulse.exceptions.category.CategoryAlreadyExists;
 import com.chamodidh.market_pulse.entity.Category;
 import com.chamodidh.market_pulse.model.CategoryModel;
 import com.chamodidh.market_pulse.repository.CategoryRepository;

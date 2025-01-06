@@ -1,27 +1,62 @@
 package com.chamodidh.market_pulse.service;
 
-import com.chamodidh.market_pulse.Exceptions.user.UserAlreadyExists;
+import com.chamodidh.market_pulse.config.CustomUserDetails;
+import com.chamodidh.market_pulse.exceptions.user.UserAlreadyExists;
 import com.chamodidh.market_pulse.entity.Cart;
 import com.chamodidh.market_pulse.entity.CustomerDetails;
 import com.chamodidh.market_pulse.entity.SupplierDetails;
 import com.chamodidh.market_pulse.entity.User;
+import com.chamodidh.market_pulse.exceptions.user.UserDoesNotExistsException;
 import com.chamodidh.market_pulse.model.UserModel;
 import com.chamodidh.market_pulse.repository.CustomerDetailsRepository;
 import com.chamodidh.market_pulse.repository.SupplierDetailsRepository;
 import com.chamodidh.market_pulse.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Objects;
 
 @Service
-public class UserServiceImpl implements UserService{
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    SupplierDetailsRepository supplierDetailsRepository;
-    @Autowired
-    CustomerDetailsRepository customerDetailsRepository;
+public class UserServiceImpl implements UserService {
+    private final UserRepository userRepository;
+    private final SupplierDetailsRepository supplierDetailsRepository;
+    private final CustomerDetailsRepository customerDetailsRepository;
+    private final BCryptPasswordEncoder bycryptPasswordEncoder;
+    private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
+//    @Autowired
+//    UserRepository userRepository;
+//    @Autowired
+//    SupplierDetailsRepository supplierDetailsRepository;
+//    @Autowired
+//    CustomerDetailsRepository customerDetailsRepository;
+//    @Autowired
+//    BCryptPasswordEncoder bycryptPasswordEncoder;
+//    @Autowired
+//    AuthenticationManager authenticationManager;
+//    @Autowired
+//    JwtService jwtService;
+
+    public UserServiceImpl(
+            UserRepository userRepository,
+                           SupplierDetailsRepository supplierDetailsRepository,
+                           CustomerDetailsRepository customerDetailsRepository,
+                           BCryptPasswordEncoder bycryptPasswordEncoder,
+                           AuthenticationManager authenticationManager,
+                           JwtService jwtService) {
+        this.userRepository = userRepository;
+        this.supplierDetailsRepository = supplierDetailsRepository;
+        this.customerDetailsRepository = customerDetailsRepository;
+        this.bycryptPasswordEncoder = bycryptPasswordEncoder;
+        this.authenticationManager = authenticationManager;
+        this.jwtService = jwtService;
+    }
+
 
     @Override
     public UserModel userRegister(UserModel userModel) {
@@ -36,7 +71,7 @@ public class UserServiceImpl implements UserService{
             user.setFirstName(userModel.getFirstName());
             user.setLastName(userModel.getLastName());
             user.setEmail(userModel.getEmail());
-            user.setPassword(userModel.getPassword());
+            user.setPassword(bycryptPasswordEncoder.encode(userModel.getPassword()));
             user.setContact(userModel.getContact());
             user.setRoles(userModel.getRoles());
             user.setRegisteredDate(new Date());
@@ -69,4 +104,37 @@ public class UserServiceImpl implements UserService{
 
 
     }
+
+    @Override
+    public String userLogin(UserModel userModel) {
+        User user = userRepository.findByEmail(
+                userModel.getEmail()).orElseThrow(() -> new UserDoesNotExistsException("User not found"));
+        if(!Objects.isNull(user)){
+            if(user.getPassword().equals(userModel.getPassword())) {
+                return "Login Successful";
+            }else{
+                return "Login Failed due to incorrect password";
+            }
+        }else {
+         return "Incorrect Email";
+        }
+
+    }
+
+    @Override
+    public String verifyUser(UserModel userModel) {
+        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                userModel.getEmail(), userModel.getPassword()
+        ));
+        if(authenticate.isAuthenticated()){
+
+            return jwtService.generateToken(userModel);
+
+        }else {
+            return "Failure";
+        }
+
+    }
+
+
 }

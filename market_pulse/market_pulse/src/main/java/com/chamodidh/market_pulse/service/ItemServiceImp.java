@@ -1,7 +1,7 @@
 package com.chamodidh.market_pulse.service;
 
-import com.chamodidh.market_pulse.Exceptions.category.CategoryNotFoundException;
-import com.chamodidh.market_pulse.Exceptions.item.*;
+import com.chamodidh.market_pulse.exceptions.category.CategoryNotFoundException;
+import com.chamodidh.market_pulse.exceptions.item.*;
 import com.chamodidh.market_pulse.entity.Category;
 import com.chamodidh.market_pulse.entity.Item;
 import com.chamodidh.market_pulse.entity.SupplierDetails;
@@ -10,7 +10,6 @@ import com.chamodidh.market_pulse.repository.CategoryRepository;
 import com.chamodidh.market_pulse.repository.ItemServiceRepository;
 import com.chamodidh.market_pulse.repository.SupplierDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
