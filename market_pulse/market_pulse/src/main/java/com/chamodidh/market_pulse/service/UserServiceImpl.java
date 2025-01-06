@@ -12,6 +12,9 @@ import com.chamodidh.market_pulse.repository.CustomerDetailsRepository;
 import com.chamodidh.market_pulse.repository.SupplierDetailsRepository;
 import com.chamodidh.market_pulse.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -32,6 +35,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     CustomerDetailsRepository customerDetailsRepository;
     @Autowired
     BCryptPasswordEncoder bycryptPasswordEncoder;
+    @Autowired
+    AuthenticationManager authenticationManager;
+    @Autowired
+    JwtService jwtService;
 
     @Override
     public UserModel userRegister(UserModel userModel) {
@@ -92,6 +99,25 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             }
         }else {
          return "Incorrect Email";
+        }
+
+    }
+
+    @Override
+    public String verifyUser(UserModel userModel) {
+        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                userModel.getEmail(), userModel.getPassword()
+        ));
+//        User user = userRepository.findByEmail(
+//                userModel.getEmail()).orElseThrow(() -> new UserDoesNotExistsException("User not found"));
+        if(authenticate.isAuthenticated()){
+
+            return jwtService.generateToken(userModel);
+
+               // return "token";
+
+        }else {
+            return "Incorrect Email";
         }
 
     }

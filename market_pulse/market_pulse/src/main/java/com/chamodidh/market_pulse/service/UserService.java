@@ -8,4 +8,6 @@ public interface UserService {
     public UserModel userRegister(UserModel userModel);
 
     public String userLogin(UserModel userModel);
+
+    public String verifyUser(UserModel user);
 }
