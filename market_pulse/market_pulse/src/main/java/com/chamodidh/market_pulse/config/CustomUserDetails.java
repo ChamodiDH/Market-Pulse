@@ -1,6 +1,8 @@
 package com.chamodidh.market_pulse.config;
 
+
 import com.chamodidh.market_pulse.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,11 +10,12 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
-@Component
+
+
 public class CustomUserDetails implements UserDetails {
-    private final User user;
+ private User user;
+
     public CustomUserDetails(User user) {
         this.user = user;
     }

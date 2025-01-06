@@ -20,17 +20,19 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class WebSecurityConfig {
 
-    @Autowired
-    private UserDetailsService userDetailsService;
 
-    @Autowired
-    private JwtAuthenticationFilter jwtAuthenticationFilter
+    private final UserDetailsService userDetailsService;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
+    public WebSecurityConfig(UserDetailsService userDetailsService, JwtAuthenticationFilter jwtAuthenticationFilter) {
+        this.userDetailsService = userDetailsService;
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(csrf -> csrf.disable()).authorizeHttpRequests(
-                requests -> requests.requestMatchers("register", "login").permitAll().
+                requests -> requests.requestMatchers("user/register", "user/login").permitAll().
                         anyRequest().authenticated()
         ).httpBasic(Customizer.withDefaults()).addFilterBefore(jwtAuthenticationFilter,
                 UsernamePasswordAuthenticationFilter.class);;
@@ -47,7 +49,7 @@ public class WebSecurityConfig {
     public AuthenticationProvider authenticationProvider(){ //check for correct user name and password comming with the API requests. Login request is bypassed
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService);
-        provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
+        provider.setPasswordEncoder(bycrptPasswordEncoder());
         return provider;
     }
 

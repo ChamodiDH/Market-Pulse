@@ -15,9 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,20 +22,41 @@ import java.util.Date;
 import java.util.Objects;
 
 @Service
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl implements UserService {
+    private final UserRepository userRepository;
+    private final SupplierDetailsRepository supplierDetailsRepository;
+    private final CustomerDetailsRepository customerDetailsRepository;
+    private final BCryptPasswordEncoder bycryptPasswordEncoder;
+    private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
+//    @Autowired
+//    UserRepository userRepository;
+//    @Autowired
+//    SupplierDetailsRepository supplierDetailsRepository;
+//    @Autowired
+//    CustomerDetailsRepository customerDetailsRepository;
+//    @Autowired
+//    BCryptPasswordEncoder bycryptPasswordEncoder;
+//    @Autowired
+//    AuthenticationManager authenticationManager;
+//    @Autowired
+//    JwtService jwtService;
 
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    SupplierDetailsRepository supplierDetailsRepository;
-    @Autowired
-    CustomerDetailsRepository customerDetailsRepository;
-    @Autowired
-    BCryptPasswordEncoder bycryptPasswordEncoder;
-    @Autowired
-    AuthenticationManager authenticationManager;
-    @Autowired
-    JwtService jwtService;
+    public UserServiceImpl(
+            UserRepository userRepository,
+                           SupplierDetailsRepository supplierDetailsRepository,
+                           CustomerDetailsRepository customerDetailsRepository,
+                           BCryptPasswordEncoder bycryptPasswordEncoder,
+                           AuthenticationManager authenticationManager,
+                           JwtService jwtService) {
+        this.userRepository = userRepository;
+        this.supplierDetailsRepository = supplierDetailsRepository;
+        this.customerDetailsRepository = customerDetailsRepository;
+        this.bycryptPasswordEncoder = bycryptPasswordEncoder;
+        this.authenticationManager = authenticationManager;
+        this.jwtService = jwtService;
+    }
+
 
     @Override
     public UserModel userRegister(UserModel userModel) {
@@ -108,30 +126,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 userModel.getEmail(), userModel.getPassword()
         ));
-//        User user = userRepository.findByEmail(
-//                userModel.getEmail()).orElseThrow(() -> new UserDoesNotExistsException("User not found"));
         if(authenticate.isAuthenticated()){
 
             return jwtService.generateToken(userModel);
 
-               // return "token";
-
         }else {
-            return "Incorrect Email";
+            return "Failure";
         }
 
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(
-                username).orElseThrow(() -> new UserDoesNotExistsException("User not found"));
-        if(Objects.isNull(user)){
-            System.out.println("User not available");
-            throw new UsernameNotFoundException("User not found");
-        }else {
-            return new CustomUserDetails(user);
-        }
 
-    }
 }
