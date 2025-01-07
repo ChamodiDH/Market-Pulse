@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.Collections;
-
+import java.util.stream.Collectors;
 
 
 public class CustomUserDetails implements UserDetails {
@@ -20,9 +20,17 @@ public class CustomUserDetails implements UserDetails {
         this.user = user;
     }
 
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        return Collections.singleton(new SimpleGrantedAuthority("USER"));
+//    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority("USER"));
+        // Convert user roles into GrantedAuthority objects with the "ROLE_" prefix
+        return user.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
+                .collect(Collectors.toList());
     }
 
     @Override
