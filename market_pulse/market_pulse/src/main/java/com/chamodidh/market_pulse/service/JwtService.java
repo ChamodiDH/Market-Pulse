@@ -32,6 +32,9 @@ public class JwtService {
         User user = userRepository.findByEmail(userModel.getEmail()).get();
         Map<String, Object> claims
                 = new HashMap<>();
+        claims.put("roles", user.getRoles());
+        claims.put("id", user.getId());
+
         return Jwts
                 .builder()
                 .claims()
